@@ -14,9 +14,11 @@
     <input type="text" placeholder="pikachu" id="pokeName" name="pokeName"><br>
     <button onclick="fetchPokemon()">Cambiar pokémon</button>
 
-    <select name="typesPokemon" id="typesPokemon"></select>
+    <select name="typesPokemon" id="typesPokemon" onChange="getPokemonListByType()"></select>
 
     <img src="./pokeball.png" alt="Pokemon" id="pokeImage" width="150px"><br>
+
+    <div class="pokemonByTypeList"></div>
 
     <footer>
         <script src="./js/app.js"></script>
