@@ -1,11 +1,19 @@
 const pokemonContainer = document.querySelector(".pokemonByTypeList");
+const url = 'https://pokeapi.co/api/v2/';
+const previus = document.querySelector("#previus");
+const next = document.querySelector("#next");
+let pokemonList;
+let offset = 1;
+let limit = 12;
 
+// Obtiene la lista de los tipos de pokémones (fuergo, normal, agua, etc.)
 const getTypesPokemonList = () => {
-    const url = 'https://pokeapi.co/api/v2/type/';
+    let urlTypesList = url + 'type';
     var typeSearch = 'types';
-    return fetchPokemon(url,typeSearch);
+    return fetchPokemon(urlTypesList, typeSearch);
 }
 
+// Obtiene la lista de pokemones que pertenecen a cierto tipo
 const getPokemonListByType = () => {
     var pokeSelect = document.getElementById("typesPokemon");
     var typeSearch = 'byType';
@@ -17,11 +25,48 @@ const getPokemonListByType = () => {
         pokeValue = 1;
     }
 
-    const url = 'https://pokeapi.co/api/v2/type/' + pokeValue;
-
-    return fetchPokemon(url,typeSearch);
+    let urlPokemonListByType = url + 'type/' + pokeValue;
+    removeChildNodes(pokemonContainer);
+    return fetchPokemon(urlPokemonListByType, typeSearch);
 }
 
+// Evento para mostrar información de un pokemon
+pokemonContainer.addEventListener('click', () => {
+    console.log("aqui");
+    location.href = './views/pokemon.html';
+});
+
+// Evento para botón anterior
+previus.addEventListener('click', () =>{
+    if(offset !== 1){
+        offset -= limit;
+        removeChildNodes(pokemonContainer);
+        pokemonsPagination(offset, limit);
+    }
+});
+
+// Evento para botón siguiente
+next.addEventListener('click', () =>{
+    if(offset + limit <= pokemonList.length){
+        offset += limit;
+        removeChildNodes(pokemonContainer);
+        pokemonsPagination(offset, limit);
+    }
+});
+
+// Pagina el listado de pokemones de 20 en 20
+const pokemonsPagination = (offset, limit) => {
+    var urlPokemon = url + 'pokemon/';
+    var typeSearch = 'byPokemon';
+
+    for (let index = offset; (index < (offset + limit)) && (index < pokemonList.length) ; index++) {
+        console.log(urlPokemon);
+        let urlPokemonByName = urlPokemon + pokemonList[index].pokemon.name;
+        fetchPokemon(urlPokemonByName, typeSearch);
+    }    
+}
+
+// Consume la api de pokemones
 const fetchPokemon = (url, typeSearch) => {
 
     fetch(url).then((result) =>{
@@ -42,8 +87,9 @@ const fetchPokemon = (url, typeSearch) => {
     })
 }
 
+// Verifica el tipo de busqueda que se está haciendo y 
+// realiza la acción correspondiente con el dato obtenido de la función fecchPokemon
 const getData = (data, typeSearch) => {
-
     switch (typeSearch) {
         case 'types':
             var typesPokemonList = Object.values(data.results); //Tu array de provincias
@@ -52,7 +98,9 @@ const getData = (data, typeSearch) => {
 
         case 'byType':
             console.log(data);
-            getDataByType(data.pokemon);
+            pokemonList = data.pokemon;
+            pokemonsPagination(offset, limit);
+            // getDataByType(data.pokemon);
             break;
 
         case 'byPokemon':
@@ -67,7 +115,7 @@ const getData = (data, typeSearch) => {
     }
 }
 
-
+// Agrega las opciones (tipos de pokemon) al select
 const addOptionsToTypesPokemonSelect = (typesPokemonList) => {
     var select = document.getElementById("typesPokemon"); //Seleccionamos el select
     console.log(typesPokemonList);
@@ -80,23 +128,7 @@ const addOptionsToTypesPokemonSelect = (typesPokemonList) => {
     }
 }
 
-const getDataByType = (pokemonTypeList) => {
-    const url = 'https://pokeapi.co/api/v2/pokemon/';
-    var typeSearch = 'byPokemon';
-    return pokemonTypeList.map(element => {
-        let urlPokemon = url + element.pokemon.name;
-        fetchPokemon(urlPokemon,typeSearch);
-    });
-    // return `<img src="${element.pokemon.url}" alt="Pokemon ${element.pokemon.name}" id="${element.pokemon.name}" width="150px">`;
-    // return '<img src="">'+element.pokemon.name+' '+element.pokemon.url+'</p>'
-    // document.getElementById("pokemonByTypeList").innerHTML = foo;
-}
-
-const printPokemonListByType = (pokemon) => {
-    let foo = `<img src="${pokemon.sprites.back_default}" alt="Pokemon ${pokemon.name}" id="${pokemon.name}" width="150px">`;
-    document.getElementById("pokemonByTypeList").innerHTML = foo;
-}
-
+// Crea las etiquetas HTML para mostrar la data de un pokémon
 const createPokemon = (pokemon) => {
 
     const card = document.createElement("div");
@@ -160,6 +192,13 @@ const searchPokemon = () => {
 const changePokeImage = (url) => {
     const pokeInput = document.getElementById("pokeImage");
     pokeInput.src = url;
+}
+
+// Remueve las etiquetas hijas del selector deseado pasado como parametro
+const removeChildNodes = (parent) => {
+    while(parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }
 
 getTypesPokemonList();
