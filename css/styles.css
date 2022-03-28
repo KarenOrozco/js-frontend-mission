@@ -1,14 +1,7 @@
+/*  */
 body {
     background: #F6F7F9;
     text-align: center;
-}
-
-h1 {
-    color: white;
-}
-
-/*  */
-body {
     font-family: 'Karla regular', 'Source Sans Pro';
 }
 
@@ -80,6 +73,10 @@ p {
     align-items: center;
 }
 
+.pokemon-flex-around {
+    justify-content: space-around;
+}
+
 .pokemon-a {
     width: 20%;
 }
@@ -125,7 +122,7 @@ p {
     appearance: none;
 }
 
-.pokemon-form-control:focus {
+.pokemon-form-control:focus, .pokemon-form-select:focus {
     color: #212529;
     background-color: #fff;
     border-color: #86b7fe;
@@ -211,17 +208,28 @@ p {
     cursor: pointer;
 }
 
-.pokemon-block,
-.pokemon-block-back {
+.pokemon-block {
     border-radius: 10px;
     padding: 10px;
     background-color: white;
     box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
 }
 
+.pokemon-block-flex {
+    display: flex;
+    flex-flow: row wrap;
+    justify-items: center;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .img-container {
     background-color: antiquewhite;
     border-radius: 10px;
+}
+
+.pokemon-data {
+    width: 100%;
 }
 
 .pokemon-block p {
@@ -232,13 +240,6 @@ p {
     text-transform: capitalize;
     font-weight: bold;
     font-size: 1.2rem;
-}
-
-#spinner {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
 }
 
 .pagination {
@@ -261,21 +262,46 @@ p {
     transform: rotateY(180deg);
 }
 
-.pokemon-block,
-.pokemon-block-back {
+.pokemon-block{
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
 }
 
-.pokemon-block-back {
-    transform: rotateY(180deg);
-    position: absolute;
-    top: 0%;
+
+
+@media (max-width: 768px) { 
+    .pokemonByTypeList {
+        grid-template-columns: 1fr 1fr;
+    }    
+
+    .pokemon-flex {
+        flex-flow: column wrap;
+        justify-content: space-around;
+    }
+
+    .data-box {
+        margin: 15px;
+    }
+
+    .pokemon-form-search {
+        width: 80%;
+        margin-top: 20px;
+    }    
+
+    .pokemon-form-control {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 36px;
+        font-weight: bold;
+    }
 }
 
-.stat-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    text-align: left;
+@media (max-width: 576px) {
+    .pokemonByTypeList {
+        grid-template-columns: 1fr;
+    }    
+
 }

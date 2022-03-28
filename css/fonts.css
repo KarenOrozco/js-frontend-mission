@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Karla regular';
+    src: url(../assets/fonts/Karla/static/Karla-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url(../assets/fonts/SourceSansPro/SourceSansPro-Regular.ttf);
+}
