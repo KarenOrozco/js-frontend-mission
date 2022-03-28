@@ -10,14 +10,26 @@
     <title>Pokédex</title>
 </head>
 <body>
-    <h1>Pokédex LaunchX</h1>
-    <input type="text" placeholder="pikachu" id="pokeName" name="pokeName"><br>
-    <button onclick="fetchPokemon()">Cambiar pokémon</button>
+
+    <header class="pokemon-header">
+        <div class="container pokemon-flex justify-content-between">
+           
+            <a href="./index.html" class="pokemon-a">
+                <img src="./assets/img/pokemon-logo.png" alt="Pokemon Logo" id="pokemon-logo" class="pokemon-logo">
+            </a>
+        
+            <div class="pokemon-form-search pokemon-flex">
+                <input  class="pokemon-form-control" type="text" placeholder="busca tu pokémon favorito" id="pokeSearch" name="pokeSearch"><br>
+                <button  class="btn btn-pokemon-primary" onclick="searchPokemon()">Cambiar pokémon</button>
+            </div>
+            
+        </div>
+    </header>
+    <!-- <h1>Pokédex LaunchX</h1> -->
+    
 
     <label>Tipo</label>
-    <select name="typesPokemon" id="typesPokemon" onChange="getPokemonListByType()"></select>
-
-    <img src="./pokeball.png" alt="Pokemon" id="pokeImage" width="150px"><br>
+    <select class="pokemon-form-select" name="typesPokemon" id="typesPokemon" onChange="getPokemonListByType()"></select>
 
     <div class="pokemonByTypeList"></div>
 

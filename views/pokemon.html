@@ -4,9 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css" type="text/css">
+    <script src="https://kit.fontawesome.com/80f89c982c.js" crossorigin="anonymous"></script>
     <title>Información de un pokémon</title>
 </head>
 <body>
-    <h1>Información de un pokémon</h1>
+    <header class="pokemon-header">
+        <div class="container pokemon-flex justify-content-between">
+           
+            <a href="../index.html" class="pokemon-a">
+                <img src="../assets/img/pokemon-logo.png" alt="Pokemon Logo" id="pokemon-logo" class="pokemon-logo">
+            </a>
+        
+            <div class="pokemon-form-search pokemon-flex">
+                <input  class="pokemon-form-control" type="text" placeholder="busca tu pokémon favorito" id="pokeSearch" name="pokeSearch"><br>
+                <button  class="btn btn-pokemon-primary" onclick="searchPokemon()">Cambiar pokémon</button>
+            </div>
+            
+        </div>
+    </header>
+    <main class="container">
+        <h1>Información de un pokémon</h1>
+        <div class="pokemon-data"></div>
+    </main>
+    <footer>
+        <script src="../js/pokemon.js"></script>
+    </footer>
 </body>
 </html>

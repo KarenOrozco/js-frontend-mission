@@ -1,10 +1,23 @@
 const pokemonContainer = document.querySelector(".pokemonByTypeList");
+const pokeInput = document.getElementById("pokeSearch");
 const url = 'https://pokeapi.co/api/v2/';
 const previus = document.querySelector("#previus");
 const next = document.querySelector("#next");
 let pokemonList;
 let offset = 1;
 let limit = 12;
+
+// buscar pokémon
+pokeInput.addEventListener('keyup', (event) => {
+    if (event.keyCode === 13) {
+        searchPokemon();
+    }
+})
+
+const searchPokemon = () => {
+    let pokeValue = pokeInput.value.toLowerCase();
+    location.href = './views/pokemon.html?search='+ pokeValue;
+}
 
 // Obtiene la lista de los tipos de pokémones (fuergo, normal, agua, etc.)
 const getTypesPokemonList = () => {
@@ -29,12 +42,6 @@ const getPokemonListByType = () => {
     removeChildNodes(pokemonContainer);
     return fetchPokemon(urlPokemonListByType, typeSearch);
 }
-
-// Evento para mostrar información de un pokemon
-pokemonContainer.addEventListener('click', () => {
-    console.log("aqui");
-    location.href = './views/pokemon.html';
-});
 
 // Evento para botón anterior
 previus.addEventListener('click', () =>{
@@ -107,6 +114,10 @@ const getData = (data, typeSearch) => {
             console.log(data);
             createPokemon(data);
             break;
+        
+        case 'pokemonData':
+            console.log(data);
+            createPokemonData(data);
 
         default :
             // getDataPokemon(data);
@@ -133,7 +144,12 @@ const createPokemon = (pokemon) => {
 
     const card = document.createElement("div");
     card.classList.add("pokemon-block");
-  
+
+    // Evento para mostrar información de un pokémon
+    card.addEventListener('click', () => {
+        location.href = './views/pokemon.html?search='+ card.getAttribute("id");
+    })
+
     const spriteContainer = document.createElement("div");
     spriteContainer.classList.add("img-container");
   
@@ -160,34 +176,36 @@ const createPokemon = (pokemon) => {
   
     // cardContainer.appendChild(card);
     // cardContainer.appendChild(cardBack);
+    card.setAttribute("id", `${pokemon.id}`);
     pokemonContainer.appendChild(card);
 }
 
-const searchPokemon = () => {
-    const pokeSearchType = document.getElementById("pokeSearchType");
-    const pokeInput = document.getElementById("pokeName");
-    let pokeValue = pokeInput.value.toLowerCase();
-    let url = "https://pokeapi.co/api/v2/";
 
-    switch(pokeSearchType){
-        case 'pokemon':
-            url += pokeSearchType + '/' + pokeValue;
-            break;
-        case 'type':
-            url += pokeSearchType + '/' + pokeValue;
-            break;
+// const searchPokemon = () => {
+//     const pokeSearchType = document.getElementById("pokeSearchType");
+//     const pokeInput = document.getElementById("pokeName");
+//     let pokeValue = pokeInput.value.toLowerCase();
+//     let url = "https://pokeapi.co/api/v2/";
 
-        case 'ability':
+//     switch(pokeSearchType){
+//         case 'pokemon':
+//             url += pokeSearchType + '/' + pokeValue;
+//             break;
+//         case 'type':
+//             url += pokeSearchType + '/' + pokeValue;
+//             break;
 
-            break;
+//         case 'ability':
 
-        default:
+//             break;
+
+//         default:
             
-            break;
-    }
+//             break;
+//     }
 
-    return url;
-}
+//     return url;
+// }
 
 const changePokeImage = (url) => {
     const pokeInput = document.getElementById("pokeImage");
